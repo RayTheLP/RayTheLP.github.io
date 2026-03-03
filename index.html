@@ -3,55 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>歡迎來到浪在東石</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="css/welcome.css">
+    <title>raythelp's Blog</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="welcome-container">
-        <!-- 背景波浪動畫 -->
-        <div class="wave wave1"></div>
-        <div class="wave wave2"></div>
-        <div class="wave wave3"></div>
-        
-        <!-- 主要內容 -->
-        <div class="content">
-            <!-- Logo 動畫 -->
-            <div class="logo-animation">
-                <img src="images/mascot/logo.webp" alt="牡蠣寶寶" class="welcome-logo">
+    <!-- 頁首容器 -->
+    <div id="headerContainer"></div>
+
+    <!-- 主要內容 -->
+    <main class="main-content">
+        <!-- 側邊欄容器 -->
+        <div id="sidebarContainer"></div>
+
+        <!-- 右側內容區域 -->
+        <section class="content">
+            <div class="posts-container" id="postsContainer">
+                <!-- 文章將由 JavaScript 動態生成 -->
             </div>
             
-            <!-- 歡迎文字 -->
-            <h1 class="welcome-text">
-                <span class="char">歡</span>
-                <span class="char">迎</span>
-                <span class="char">來</span>
-                <span class="char">到</span>
-                <span class="char">浪</span>
-                <span class="char">在</span>
-                <span class="char">東</span>
-                <span class="char">石</span>
-            </h1>
-            
-            <p class="subtitle">探索東石海洋魅力 與小浪一起發現美好</p>
-            
-            <!-- 載入進度條 -->
-            <div class="loading-bar">
-                <div class="loading-progress"></div>
+            <!-- 分頁控制項 -->
+            <div class="pagination" id="pagination">
+                <!-- 分頁按鈕將由 JavaScript 動態生成 -->
             </div>
-        </div>
-        
-        <!-- 跳過按鈕 -->
-        <button class="skip-btn" onclick="skipIntro()">跳過 ›</button>
-        
-        <!-- 漂浮的圖標裝飾 -->
-        <i class="fas fa-fish floating-icon icon1"></i>
-        <i class="fas fa-ship floating-icon icon2"></i>
-        <i class="fas fa-anchor floating-icon icon3"></i>
-        <i class="fas fa-water floating-icon icon4"></i>
-        <i class="fas fa-sailboat floating-icon icon5"></i>
-    </div>
-    
-    <script src="js/welcome.js"></script>
+        </section>
+    </main>
+
+    <!-- 頁尾容器 -->
+    <div id="footerContainer"></div>
+
+    <!-- 載入設定檔 -->
+    <script src="js/config.js"></script>
+    <!-- 載入共用元件 -->
+    <script src="js/common.js"></script>
+    <!-- 載入主要功能 -->
+    <script src="js/main.js"></script>
+    <!-- 載入互動式功能 -->
+    <script src="js/interactive.js"></script>
+    <!-- 載入統計功能 -->
+    <script src="js/analytics.js"></script>
 </body>
 </html>
