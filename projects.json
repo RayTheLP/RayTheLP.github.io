@@ -1,0 +1,28 @@
+{
+  "projects": [
+    {
+      "id": "Dongshi",
+      "title": "網頁程式設計期末專題",
+      "description": "當初花了很長一段時間才搞好的網頁，因為在期末發表有蠻好的表現所以決定把它放上來。",
+      "date": "2026-03-06",
+      "tags": ["HTML", "CSS", "JavaScript"],
+      "type": "web",
+      "status": "completed",
+      "featured": true,
+      "demo": "projects/Dongshi/index.html",
+      "github": ""
+    },
+    {
+      "id": "1A2B",
+      "title": "基礎程式設計期末專題",
+      "description": "還記得那時候研究了很久的1A2B邏輯，最後終於寫出來了，以為自己要拿第一名，結果被其他人打趴。",
+      "date": "2026-03-06",
+      "tags": ["Python"],
+      "type": "app",
+      "status": "completed",
+      "featured": false,
+      "demo": "",
+      "github": "https://github.com/raythelp/1A2B"
+    }
+  ]
+}

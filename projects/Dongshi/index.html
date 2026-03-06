@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>歡迎來到浪在東石</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/welcome.css">
+</head>
+<body>
+    <div class="welcome-container">
+        <!-- 背景波浪動畫 -->
+        <div class="wave wave1"></div>
+        <div class="wave wave2"></div>
+        <div class="wave wave3"></div>
+        
+        <!-- 主要內容 -->
+        <div class="content">
+            <!-- Logo 動畫 -->
+            <div class="logo-animation">
+                <img src="images/mascot/logo.webp" alt="牡蠣寶寶" class="welcome-logo">
+            </div>
+            
+            <!-- 歡迎文字 -->
+            <h1 class="welcome-text">
+                <span class="char">歡</span>
+                <span class="char">迎</span>
+                <span class="char">來</span>
+                <span class="char">到</span>
+                <span class="char">浪</span>
+                <span class="char">在</span>
+                <span class="char">東</span>
+                <span class="char">石</span>
+            </h1>
+            
+            <p class="subtitle">探索東石海洋魅力 與小浪一起發現美好</p>
+            
+            <!-- 載入進度條 -->
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+        
+        <!-- 跳過按鈕 -->
+        <button class="skip-btn" onclick="skipIntro()">跳過 ›</button>
+        
+        <!-- 漂浮的圖標裝飾 -->
+        <i class="fas fa-fish floating-icon icon1"></i>
+        <i class="fas fa-ship floating-icon icon2"></i>
+        <i class="fas fa-anchor floating-icon icon3"></i>
+        <i class="fas fa-water floating-icon icon4"></i>
+        <i class="fas fa-sailboat floating-icon icon5"></i>
+    </div>
+    
+    <script src="js/welcome.js"></script>
+</body>
+</html>

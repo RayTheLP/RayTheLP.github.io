@@ -20,8 +20,8 @@ const SITE_CONFIG = {
     // 導航選單
     navigation: [
         { name: 'Home', url: 'index.html', icon: 'fas fa-home' },
-        { name: 'Timeline', url: 'posts.html', icon: 'fas fa-file-alt' },
         { name: 'About', url: 'about.html', icon: 'fas fa-user' },
+        { name: 'Projects', url: 'projects.html', icon: 'fas fa-folder-open' },
         { name: 'GitHub', url: 'https://github.com/raythelp', icon: 'fab fa-github', external: true }
     ],
     

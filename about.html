@@ -4,114 +4,721 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About - raythelp's Blog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ══ About Page — Section Styles ══ */
+        .about-page {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: calc(var(--nav-height) + 56px) 24px 96px;
+        }
+
+        /* ── Hero ── */
+        .ap-hero {
+            text-align: center;
+            position: relative;
+            padding: 48px 0 80px;
+        }
+        .ap-hero-glow {
+            position: absolute;
+            top: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 640px;
+            height: 380px;
+            background: radial-gradient(ellipse, var(--glow-color) 0%, transparent 68%);
+            pointer-events: none;
+            animation: heroPulse 8s ease-in-out infinite alternate;
+        }
+        .ap-avatar {
+            width: 108px;
+            height: 108px;
+            border-radius: 50%;
+            background: var(--bg-elevated);
+            border: 3px solid var(--accent);
+            margin: 0 auto 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            color: var(--accent);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 0 6px var(--accent-soft), 0 8px 32px rgba(124,106,239,0.22);
+            animation: fadeInUp 0.55s ease-out both;
+        }
+        .ap-avatar img {
+            width: 100%; height: 100%;
+            object-fit: cover; border-radius: 50%;
+        }
+        .ap-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 5px 16px;
+            background: var(--accent-soft);
+            border: 1px solid rgba(124,106,239,0.2);
+            border-radius: var(--radius-pill);
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+            margin-bottom: 14px;
+            animation: fadeInUp 0.55s ease-out 0.08s both;
+        }
+        .ap-name {
+            font-size: clamp(40px, 6vw, 68px);
+            font-weight: 800;
+            letter-spacing: -0.045em;
+            line-height: 1.05;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 14px;
+            animation: fadeInUp 0.55s ease-out 0.14s both;
+        }
+        .ap-tagline {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            max-width: 520px;
+            margin: 0 auto 14px;
+            animation: fadeInUp 0.55s ease-out 0.2s both;
+        }
+        .ap-roles {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin: 14px 0 30px;
+            animation: fadeInUp 0.55s ease-out 0.26s both;
+        }
+        .ap-role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-pill);
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+        .ap-role-badge i { color: var(--accent); font-size: 11px; }
+        .ap-role-badge:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-1px);
+        }
+        .ap-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            animation: fadeInUp 0.55s ease-out 0.34s both;
+        }
+        .ap-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 26px;
+            border-radius: var(--radius-pill);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            border: none;
+            font-family: var(--font-sans);
+            cursor: pointer;
+        }
+        .ap-btn-primary {
+            background: var(--accent-gradient);
+            color: #fff;
+            box-shadow: 0 4px 18px rgba(124,106,239,0.32);
+        }
+        .ap-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(124,106,239,0.46);
+            color: #fff;
+        }
+        .ap-btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        .ap-btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* ── Section Layout ── */
+        .ap-section { margin-bottom: 76px; }
+        .ap-section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 32px;
+        }
+        .ap-section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 5px 16px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            border-radius: var(--radius-pill);
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            white-space: nowrap;
+        }
+        .ap-section-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        /* ── Self-Intro Card ── */
+        .ap-intro-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            padding: 36px 40px;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .ap-intro-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--accent-gradient);
+        }
+        .ap-intro-card:hover {
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-md);
+        }
+        .ap-quote {
+            display: block;
+            font-size: 72px;
+            line-height: 0.6;
+            color: var(--accent);
+            opacity: 0.25;
+            font-family: Georgia, serif;
+            margin-bottom: 16px;
+            user-select: none;
+        }
+        .ap-intro-card p {
+            color: var(--text-secondary);
+            font-size: 15.5px;
+            line-height: 1.9;
+        }
+        .ap-intro-card strong { color: var(--text-primary); }
+
+        /* ── Timeline ── */
+        .ap-timeline {
+            position: relative;
+            padding-left: 36px;
+        }
+        .ap-timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 10px;
+            bottom: 10px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent) 0%, var(--border-color) 100%);
+            border-radius: 1px;
+        }
+        .ap-timeline-item {
+            position: relative;
+            padding-bottom: 36px;
+        }
+        .ap-timeline-item:last-child { padding-bottom: 0; }
+        .ap-timeline-dot {
+            position: absolute;
+            left: -44px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            transition: var(--transition);
+            z-index: 1;
+        }
+        .ap-timeline-item.active .ap-timeline-dot {
+            border-color: var(--accent);
+            background: var(--accent);
+            box-shadow: 0 0 0 5px var(--accent-soft);
+        }
+        .ap-timeline-time {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 5px;
+        }
+        .ap-timeline-item.active .ap-timeline-time { color: var(--accent); }
+        .ap-timeline-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 7px;
+            letter-spacing: -0.01em;
+        }
+        .ap-timeline-item.active .ap-timeline-title { color: var(--accent); }
+        .ap-timeline-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .ap-timeline-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: 12px;
+        }
+        .ap-timeline-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 12px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            border-radius: var(--radius-pill);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* ── Skills Grid ── */
+        .ap-skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .ap-skill-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .ap-skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.35s ease;
+        }
+        .ap-skill-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+        .ap-skill-card:hover::before { transform: scaleX(1); }
+        .ap-skill-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            background: var(--accent-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+        .ap-skill-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+            margin-bottom: 14px;
+        }
+        .ap-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .ap-pill {
+            padding: 5px 14px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-pill);
+            font-size: 13px;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        .ap-pill:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-soft);
+        }
+
+        /* ── Hobbies Grid ── */
+        .ap-hobbies-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .ap-hobby-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 30px 28px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .ap-hobby-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+        .ap-hobby-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--accent-gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.35s ease;
+        }
+        .ap-hobby-card:hover::after { transform: scaleX(1); }
+        .ap-hobby-emoji {
+            font-size: 36px;
+            display: block;
+            margin-bottom: 14px;
+            line-height: 1;
+        }
+        .ap-hobby-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 9px;
+            letter-spacing: -0.01em;
+        }
+        .ap-hobby-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.75;
+        }
+
+        /* ── Contact Section ── */
+        .ap-contact {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            padding: 52px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .ap-contact:hover { border-color: var(--border-hover); }
+        .ap-contact::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 0%, var(--glow-color), transparent 58%);
+            pointer-events: none;
+        }
+        .ap-contact-title {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            position: relative;
+        }
+        .ap-contact-subtitle {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-bottom: 34px;
+            position: relative;
+        }
+        .ap-contact-btns {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        .ap-contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 12px 28px;
+            border-radius: var(--radius-pill);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+        }
+        .ap-contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+        }
+        .ap-contact-btn.github:hover {
+            background: #24292e;
+            border-color: #24292e;
+            color: #fff;
+        }
+        .ap-contact-btn.instagram:hover {
+            background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            border-color: transparent;
+            color: #fff;
+        }
+        .ap-contact-btn.email:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-soft);
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .ap-skills-grid,
+            .ap-hobbies-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 560px) {
+            .ap-name { font-size: 36px; }
+            .ap-cta { flex-direction: column; align-items: stretch; }
+            .ap-btn { justify-content: center; }
+            .ap-contact { padding: 36px 20px; }
+            .ap-contact-btns { flex-direction: column; }
+            .ap-contact-btn { justify-content: center; }
+        }
+    </style>
 </head>
 <body>
-    <!-- 頁首容器 -->
     <div id="headerContainer"></div>
 
-    <!-- 主要內容 -->
-    <main class="main-content">
-        <!-- 側邊欄容器 -->
-        <div id="sidebarContainer"></div>
+    <main class="about-page">
 
-        <!-- 右側內容區域 -->
-        <section class="content">
-            <div class="about-content">
-                <h1>About me</h1>
-                
-                <div class="about-section">
-                    <h2><i class="fas fa-user"></i> Self-Intro</h2>
-                    <p>哈囉大家好，我是raythelp，目前正就讀國立嘉義大學資管系，大一下的時候頭殼撞到所以選了系學會長來充實(荼毒)自己的大學生活，平常沒事就喜歡玩玩遊戲順便搞一點自己感興趣的事。</p>
+        <!-- ══ HERO ══ -->
+        <section class="ap-hero">
+            <div class="ap-hero-glow"></div>
+
+            <div class="ap-avatar">
+                <img src="images/avatar.jpg" alt="raythelp"
+                     onerror="this.style.display='none';this.parentElement.querySelector('i').style.display='flex'">
+                <i class="fas fa-dog" style="display:none;font-size:42px;color:var(--accent)"></i>
+            </div>
+
+            <span class="ap-eyebrow"><i class="fas fa-user-astronaut"></i> Personal Portfolio</span>
+            <h1 class="ap-name">raythelp</h1>
+            <p class="ap-tagline">
+                嘉義大學資管系 · 系學會會長 · 新民校區代表 · 程式愛好者<br>
+                喜歡自己用程式解決問題，對 AI 與程式設計和新推出的技術很有興趣。
+            </p>
+
+            <div class="ap-roles">
+                <span class="ap-role-badge"><i class="fas fa-code"></i> Developer</span>
+                <span class="ap-role-badge"><i class="fas fa-robot"></i> AI Enthusiast</span>
+                <span class="ap-role-badge"><i class="fas fa-graduation-cap"></i> Student</span>
+                <span class="ap-role-badge"><i class="fas fa-utensils"></i> Foodie</span>
+            </div>
+
+            <div class="ap-cta">
+                <a href="index.html" class="ap-btn ap-btn-primary">
+                    <i class="fas fa-newspaper"></i> 瀏覽文章
+                </a>
+                <a href="#contact" class="ap-btn ap-btn-secondary">
+                    <i class="fas fa-paper-plane"></i> 聯絡我
+                </a>
+            </div>
+        </section>
+
+        <!-- ══ SELF-INTRO ══ -->
+        <section class="ap-section">
+            <div class="ap-section-header reveal">
+                <span class="ap-section-badge"><i class="fas fa-user"></i> Self-Intro</span>
+                <div class="ap-section-line"></div>
+            </div>
+            <div class="ap-intro-card reveal" data-revealDelay="60">
+                <span class="ap-quote">"</span>
+                <p>哈囉大家好，我是 <strong>raythelp</strong>，目前就讀國立嘉義大學資訊管理學系。大一下的時候頭殼撞到，所以選了系學會長來充實（荼毒）自己的大學生活。平常沒事就喜歡玩玩遊戲、追追劇，偶爾搞一些自己感興趣的開發專案。這個部落格是我記錄生活、分享技術心得的小角落，希望這裏的內容對你有所幫助！</p>
+            </div>
+        </section>
+
+        <!-- ══ BACKGROUND · TIMELINE ══ -->
+        <section class="ap-section">
+            <div class="ap-section-header reveal">
+                <span class="ap-section-badge"><i class="fas fa-graduation-cap"></i> Background</span>
+                <div class="ap-section-line"></div>
+            </div>
+
+            <div class="ap-timeline">
+                <div class="ap-timeline-item reveal" data-revealDelay="0">
+                    <div class="ap-timeline-dot"></div>
+                    <div class="ap-timeline-time">小學</div>
+                    <div class="ap-timeline-title">高雄市立鳳西國小</div>
+                    <div class="ap-timeline-desc">快樂過生活，從小學英文成為我接觸最新科技的工具之一。</div>
                 </div>
 
-                <div class="about-section">
-                    <h2><i class="fas fa-graduation-cap"></i> Background</h2>
-                    <ul>
-                        <li>高雄市立鳳西國小</li>
-                        <li>高雄市立鳳西國中</li>
-                        <li>國立鳳山高中+美國箴言高中雙聯學程</li>
-                        <li>國立嘉義大學 資訊管理學系</li>
-                        <li>目前專注於程式設計(雖然這東西非常沒前途)，生程式AI研究及資料分析</li>
-                    </ul>
+                <div class="ap-timeline-item reveal" data-revealDelay="80">
+                    <div class="ap-timeline-dot"></div>
+                    <div class="ap-timeline-time">國中</div>
+                    <div class="ap-timeline-title">高雄市立鳳西國中</div>
+                    <div class="ap-timeline-desc">接觸資訊科技課程，開始寫下第一行程式，對軟體開發萌生興趣。</div>
                 </div>
 
-                <div class="about-section">
-                    <h2><i class="fas fa-code"></i> Skills</h2>
-                    <div class="skills-grid">
-                        <div class="skill-category">
-                            <h3>Programming language</h3>
-                            <ul>
-                                <li>Python</li>
-                                <li>C</li>
-                                <li>Html</li>
-                                <li>CSS</li>
-                            </ul>
-                        </div>
-                        <div class="skill-category">
-                            <h3>IDE and Tools</h3>
-                            <ul>
-                                <li>Unity</li>
-                                <li>Github</li>
-                                <li>VScode</li>
-                                <li>Crusor</li>
-                                <li>Node.js</li>
-                                <li>Git</li>
-                                <li>Docker</li>
-                            </ul>
-                        </div>
-                        <div class="skill-category">
-                            <h3>Other skills</h3>
-                            <ul>
-                                <li>資料分析</li>
-                                <li>專案管理</li>
-                            </ul>
-                        </div>
+                <div class="ap-timeline-item reveal" data-revealDelay="160">
+                    <div class="ap-timeline-dot"></div>
+                    <div class="ap-timeline-time">高中</div>
+                    <div class="ap-timeline-title">國立鳳山高中 ＋ 美國箴言高中 雙聯學程</div>
+                    <div class="ap-timeline-desc">修讀雙聯學程，拓展國際視野，取得雙學位的同時決定留在台灣修讀台灣大學。</div>
+                </div>
+
+                <div class="ap-timeline-item active reveal" data-revealDelay="240">
+                    <div class="ap-timeline-dot"></div>
+                    <div class="ap-timeline-time">大學 · 現在</div>
+                    <div class="ap-timeline-title">國立嘉義大學 資訊管理學系</div>
+                    <div class="ap-timeline-desc">擔任系學會會長，接下新民校區代表的職責，參與課外活動讓我學習了很多與人相處的方法，這讓我在團隊合作上能更游刃有餘。目前的學習重點：</div>
+                    <div class="ap-timeline-tags">
+                        <span class="ap-timeline-tag"><i class="fas fa-code"></i> 程式設計</span>
+                        <span class="ap-timeline-tag"><i class="fas fa-robot"></i> 生成式 AI</span>
+                        <span class="ap-timeline-tag"><i class="fas fa-chart-bar"></i> 金融投資</span>
                     </div>
-                </div>
-
-                <div class="about-section">
-                    <h2><i class="fas fa-trophy"></i> Hobby and Event</h2>
-                    <ul>
-                        <li><strong>程式開發</strong> - 喜歡學習新的程式語言並利用生成式AI輔助學習</li>
-                        <li><strong>持續學習</strong> - 保持對新技術的好奇心，每周都看Github上阮一峰老師的科技愛好者周刊</li>
-                        <li><strong>影音成癮</strong> - 追劇聽音樂已經是我人生中最不可或缺的活動之一了</li>
-                    </ul>
-                </div>
-
-                <div class="about-section">
-                    <h2><i class="fas fa-envelope"></i> Contact</h2>
-                    <div class="contact-info">
-                        <p><i class="fab fa-github"></i> <a href="https://github.com/raythelp" target="_blank">GitHub</a></p>
-                        <p><i class="fab fa-instagram"></i> <a href="https://www.instagram.com/_ray0530/" target="_blank">Instagram</a></p>
-                        <p><i class="fas fa-envelope"></i>ray079099@gmail.com</p>
-                    </div>
-                </div>
-
-                <div class="about-section">
-                    <h2><i class="fas fa-heart"></i> For this Blog</h2>
-                    <p>The Blog is for sharing my daily and some skill tips, I will post:</p>
-                    <ul>
-                        <li>Food Experience</li>
-                        <li>Course Experience </li>
-                        <li>Daily Sharing</li>
-                        <li>Technology Sharing</li>
-                    </ul>
-                    <p>Wish the contents would be helpful for you guys.</p>
                 </div>
             </div>
         </section>
+
+        <!-- ══ SKILLS ══ -->
+        <section class="ap-section">
+            <div class="ap-section-header reveal">
+                <span class="ap-section-badge"><i class="fas fa-layer-group"></i> Skills</span>
+                <div class="ap-section-line"></div>
+            </div>
+
+            <div class="ap-skills-grid">
+                <div class="ap-skill-card reveal" data-revealDelay="0">
+                    <div class="ap-skill-icon"><i class="fas fa-code"></i></div>
+                    <div class="ap-skill-label">Languages</div>
+                    <div class="ap-pills">
+                        <span class="ap-pill">Python</span>
+                        <span class="ap-pill">C</span>
+                        <span class="ap-pill">C#</span>
+                        <span class="ap-pill">HTML</span>
+                        <span class="ap-pill">CSS</span>
+                        <span class="ap-pill">JavaScript</span>
+                        <span class="ap-pill">Java</span>
+                        <span class="ap-pill">SQL</span>
+                    </div>
+                </div>
+
+                <div class="ap-skill-card reveal" data-revealDelay="100">
+                    <div class="ap-skill-icon"><i class="fas fa-screwdriver-wrench"></i></div>
+                    <div class="ap-skill-label">IDE &amp; Tools</div>
+                    <div class="ap-pills">
+                        <span class="ap-pill">VS Code</span>
+                        <span class="ap-pill">Cursor</span>
+                        <span class="ap-pill">Git</span>
+                        <span class="ap-pill">GitHub</span>
+                        <span class="ap-pill">Docker</span>
+                        <span class="ap-pill">Node.js</span>
+                        <span class="ap-pill">Unity</span>
+                        <span class="ap-pill">VirtualBox</span>
+                        <span class="ap-pill">Linux</span>
+                    </div>
+                </div>
+
+                <div class="ap-skill-card reveal" data-revealDelay="200">
+                    <div class="ap-skill-icon"><i class="fas fa-star"></i></div>
+                    <div class="ap-skill-label">Other Skills</div>
+                    <div class="ap-pills">
+                        <span class="ap-pill">Prompt Engineering</span>
+                        <span class="ap-pill">Data Analysis</span>
+                        <span class="ap-pill">UI/UX Design</span>
+                        <span class="ap-pill">Event Planning</span>
+                        <span class="ap-pill">Technical Writing</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ HOBBIES ══ -->
+        <section class="ap-section">
+            <div class="ap-section-header reveal">
+                <span class="ap-section-badge"><i class="fas fa-heart"></i> Hobbies &amp; Interests</span>
+                <div class="ap-section-line"></div>
+            </div>
+
+            <div class="ap-hobbies-grid">
+                <div class="ap-hobby-card reveal" data-revealDelay="0">
+                    <span class="ap-hobby-emoji">💻</span>
+                    <div class="ap-hobby-title">程式開發</div>
+                    <div class="ap-hobby-desc">喜歡學習新的程式語言，並利用生成式 AI 輔助開發各種有趣的小專案，享受「從零到一」的創造過程。</div>
+                </div>
+
+                <div class="ap-hobby-card reveal" data-revealDelay="100">
+                    <span class="ap-hobby-emoji">📚</span>
+                    <div class="ap-hobby-title">持續學習</div>
+                    <div class="ap-hobby-desc">有空就會上Github或看IThome關注科技圈的新知識及新技術，以此來增進自己的能力。</div>
+                </div>
+
+                <div class="ap-hobby-card reveal" data-revealDelay="200">
+                    <span class="ap-hobby-emoji">🎬</span>
+                    <div class="ap-hobby-title">影音成癮</div>
+                    <div class="ap-hobby-desc">追劇、聽音樂是人生中最不可或缺的活動。從美劇、韓劇到日漫都看，音樂類型也非常廣泛。</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ CONTACT ══ -->
+        <section class="ap-section" id="contact">
+            <div class="ap-section-header reveal">
+                <span class="ap-section-badge"><i class="fas fa-paper-plane"></i> Contact</span>
+                <div class="ap-section-line"></div>
+            </div>
+
+            <div class="ap-contact reveal" data-revealDelay="60">
+                <h2 class="ap-contact-title">一起來交流吧！</h2>
+                <p class="ap-contact-subtitle">技術問題、合作提案，或只是想打個招呼都非常歡迎 ✨</p>
+                <div class="ap-contact-btns">
+                    <a href="https://github.com/raythelp" target="_blank" rel="noopener" class="ap-contact-btn github">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="https://www.instagram.com/_ray0530/" target="_blank" rel="noopener" class="ap-contact-btn instagram">
+                        <i class="fab fa-instagram"></i> Instagram
+                    </a>
+                    <a href="mailto:ray079099@gmail.com" class="ap-contact-btn email">
+                        <i class="fas fa-envelope"></i> ray079099@gmail.com
+                    </a>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <!-- 頁尾容器 -->
     <div id="footerContainer"></div>
 
-    <!-- 載入設定檔 -->
     <script src="js/config.js"></script>
-    <!-- 載入共用元件 -->
     <script src="js/common.js"></script>
-    <!-- 載入主要功能 -->
-    <script src="js/main.js"></script>
 </body>
-</html> 
+</html>

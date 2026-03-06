@@ -37,13 +37,19 @@ class CommonComponents {
         // 頁尾 HTML 模板
         this.footerTemplate = `
             <footer class="footer">
-                <div class="footer-content">
-                    <div class="visitor-count">
-                        <i class="fas fa-users"></i>
-                        <span>Blog Visitors: <span id="visitorCount">0</span></span>
+                <div class="footer-inner">
+                    <div class="footer-brand">
+                        <span class="footer-logo">✦ ${window.SITE_CONFIG?.profile?.name || 'raythelp'}</span>
+                        <span class="footer-desc">分享技術心得和學習筆記</span>
                     </div>
-                    <p>© ${new Date().getFullYear()} ${window.SITE_CONFIG?.profile?.name || 'raythelp'} All Rights Reserved.</p>
-                    <p>Built by <a href="https://pages.github.com/" target="_blank" rel="noopener">Github Pages</a></p>
+                    <div class="footer-meta">
+                        <span class="visitor-count">
+                            <i class="fas fa-eye"></i>
+                            <span id="visitorCount">0</span> visitors
+                        </span>
+                        <span>© ${new Date().getFullYear()} ${window.SITE_CONFIG?.profile?.name || 'raythelp'}</span>
+                        <span>Built with <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a></span>
+                    </div>
                 </div>
             </footer>
         `;
@@ -51,18 +57,18 @@ class CommonComponents {
         // 頁首 HTML 模板
         this.headerTemplate = `
             <header class="header">
-                <div class="header-content">
+                <div class="header-inner">
                     <a href="index.html" class="logo">
-                        <i class="fas fa-home"></i>
-                        <span id="siteTitle">${window.SITE_CONFIG?.siteTitle || '我的部落格'}</span>
+                        <span class="logo-mark">✦</span>
+                        <span id="siteTitle">${window.SITE_CONFIG?.profile?.name || 'raythelp'}</span>
                     </a>
                     <nav class="nav">
                         ${this.generateNavigation()}
                     </nav>
-                    <div class="header-controls">
+                    <div class="header-actions">
                         <div class="search-box">
                             <i class="fas fa-search"></i>
-                            <input type="text" placeholder="搜尋..." id="searchInput">
+                            <input type="text" placeholder="搜尋文章..." id="searchInput">
                         </div>
                         <div class="color-picker-container">
                             <button class="color-picker-toggle" id="colorPickerToggle" title="自定義顏色">
@@ -393,29 +399,84 @@ class CommonComponents {
     }
 }
 
-// 創建全域實例
+// 創建全域實例（scripts 在 body 底部載入，DOM 已就緒）
 window.commonComponents = new CommonComponents();
 
-// 頁面載入時自動初始化
-document.addEventListener('DOMContentLoaded', function() {
-    // 初始化頁首
-    window.commonComponents.initHeader();
-    
-    // 初始化側邊欄（如果存在）
-    const sidebarContainer = document.querySelector('#sidebarContainer');
-    if (sidebarContainer) {
-        const timestamp = Date.now();
-        const avatarUrl = (window.SITE_CONFIG?.profile?.avatarImage || 'images/avatar.jpg') + '?v=' + timestamp;
-        
-        const sidebarHtml = window.commonComponents.sidebarTemplate.replace('AVATAR_URL_PLACEHOLDER', avatarUrl);
-        
-        sidebarContainer.innerHTML = sidebarHtml;
-        console.log('側邊欄已渲染，頭像 URL:', avatarUrl);
+// ═══════════════════════════════════════════════════
+// Scroll Reveal — IntersectionObserver 驅動的捲動動畫
+// ═══════════════════════════════════════════════════
+(function initScrollReveal() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // 支援延遲 stagger
+                const delay = entry.target.dataset.revealDelay || 0;
+                setTimeout(() => {
+                    entry.target.classList.add('revealed');
+                }, delay);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    function observe() {
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-scale').forEach(el => {
+            if (!el.classList.contains('revealed')) {
+                observer.observe(el);
+            }
+        });
     }
 
-    // 初始化頁尾
-    window.commonComponents.initFooter();
+    // 初始化 + MutationObserver 偵測動態新增
+    observe();
+    const mo = new MutationObserver(() => observe());
+    mo.observe(document.body, { childList: true, subtree: true });
+})();
 
-    // 初始化訪客計數
-    window.commonComponents.initVisitorCount();
-}); 
+// ═══════════════════════════════════════════════════
+// Reading Progress Bar — 文章頁面閱讀進度條
+// ═══════════════════════════════════════════════════
+(function initReadingProgress() {
+    // 僅在有 .post-layout 的頁面啟用
+    if (!document.querySelector('.post-layout')) return;
+
+    const bar = document.createElement('div');
+    bar.className = 'reading-progress';
+    document.body.appendChild(bar);
+
+    function updateProgress() {
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        if (docHeight <= 0) { bar.style.width = '0%'; return; }
+        const pct = Math.min((window.scrollY / docHeight) * 100, 100);
+        bar.style.width = pct + '%';
+    }
+
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+})();
+
+// ═══════════════════════════════════════════════════
+// Back to Top — 返回頂部按鈕
+// ═══════════════════════════════════════════════════
+(function initBackToTop() {
+    const btn = document.createElement('button');
+    btn.className = 'back-to-top';
+    btn.setAttribute('aria-label', '返回頂部');
+    btn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+    document.body.appendChild(btn);
+
+    btn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    function toggle() {
+        if (window.scrollY > 400) {
+            btn.classList.add('visible');
+        } else {
+            btn.classList.remove('visible');
+        }
+    }
+
+    window.addEventListener('scroll', toggle, { passive: true });
+    toggle();
+})();

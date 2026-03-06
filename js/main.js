@@ -66,6 +66,11 @@ async function loadPosts() {
         // 渲染側邊欄
         renderCategories();
         renderTags();
+
+        // 渲染資料視覺化儀表板
+        if (window.Charts) {
+            Charts.renderDashboard('statsDashboard', posts);
+        }
         
     } catch (error) {
         console.error('載入文章時發生錯誤:', error);
@@ -139,6 +144,17 @@ function renderPosts(postsToRender) {
     
     const postsHTML = postsToRender.map(post => createPostCard(post)).join('');
     container.innerHTML = postsHTML;
+    
+    // 分級卡片動畫 stagger
+    const cards = container.querySelectorAll('.post-card');
+    cards.forEach((card, i) => {
+        setTimeout(() => card.classList.add('visible'), i * 80);
+    });
+    
+    // 第一張標記為 featured
+    if (cards.length && currentPage === 1) {
+        cards[0].classList.add('featured');
+    }
     
     // 為文章卡片添加點擊事件處理器
     document.querySelectorAll('.post-card').forEach(card => {
@@ -258,32 +274,9 @@ function goToPage(page) {
 
 // 創建文章卡片 HTML
 function createPostCard(post) {
-    // 計算字數的函數
-    function countWords(content) {
-        if (!content) return 0;
-        // 移除 Markdown 語法並計算中文字和英文字
-        const text = content
-            .replace(/```[\s\S]*?```/g, '') // 移除程式碼區塊
-            .replace(/`.*?`/g, '')          // 移除行內程式碼
-            .replace(/\[.*?\]/g, '')        // 移除連結文字
-            .replace(/\(.*?\)/g, '')        // 移除連結網址
-            .replace(/[#*_~]/g, '');        // 移除其他 Markdown 語法
-
-        // 計算中文字數（每個中文字算一個字）
-        const chineseCount = (text.match(/[\u4e00-\u9fa5]/g) || []).length;
-        
-        // 計算英文單字數（連續的英文字母算一個字）
-        const englishCount = (text.match(/[a-zA-Z]+/g) || []).length;
-        
-        return chineseCount + englishCount;
-    }
-    
-    // 使用本地字數計算函數或 Analytics.countWords
-    const wordCount = window.Analytics && typeof Analytics.countWords === 'function' 
-        ? Analytics.countWords(post.content) 
-        : countWords(post.content);
+    const wordCount = post.wordCount || 0;
     const readingSpeed = window.SITE_CONFIG?.posts?.readingSpeed || 200;
-    const readingTime = Math.ceil(wordCount / readingSpeed) || 1; // 至少顯示 1 分鐘
+    const readingTime = Math.ceil(wordCount / readingSpeed) || 1;
     
     const tagsHTML = post.tags ? post.tags.map(tag => 
         `<span class="tag">${tag}</span>`
@@ -291,21 +284,23 @@ function createPostCard(post) {
     
     return `
         <article class="post-card" data-post-id="${post.id}">
-            <h2 class="post-title">${post.title}</h2>
+            <div class="post-card-header">
+                <h2 class="post-title">${post.title}</h2>
+                <span class="post-card-category">${post.category || '未分類'}</span>
+            </div>
             <div class="post-meta">
                 <span><i class="fas fa-calendar"></i> ${post.date}</span>
-                <span><i class="fas fa-folder"></i> ${post.category || '未分類'}</span>
             </div>
             <div class="post-tags">
-                <i class="fas fa-tags"></i>
                 ${tagsHTML}
             </div>
             <p class="post-excerpt">${post.excerpt || '沒有摘要'}</p>
             <div class="post-stats">
-                <span>${wordCount} 字 | ${readingTime} 分鐘</span>
-            </div>
-            <div class="post-arrow">
-                <i class="fas fa-arrow-right"></i>
+                <div class="post-stats-left">
+                    <span class="post-stat-item"><i class="fas fa-font"></i> ${wordCount} 字</span>
+                    <span class="post-stat-item"><i class="fas fa-clock"></i> ${readingTime} 分鐘</span>
+                </div>
+                <span class="post-arrow">閱讀全文 <i class="fas fa-arrow-right"></i></span>
             </div>
         </article>
     `;
@@ -508,7 +503,7 @@ function applyFilter(filterType, filterValue) {
         currentPosts = posts.filter(post => 
             post.title.toLowerCase().includes(searchTerm) || 
             post.excerpt.toLowerCase().includes(searchTerm) ||
-            post.content.toLowerCase().includes(searchTerm) ||
+            (post.category && post.category.toLowerCase().includes(searchTerm)) ||
             (post.tags && post.tags.some(tag => tag.toLowerCase().includes(searchTerm)))
         );
     }
@@ -570,7 +565,7 @@ function performSearch(searchTerm) {
     const filteredPosts = posts.filter(post => 
         post.title.toLowerCase().includes(searchTerm) ||
         post.excerpt.toLowerCase().includes(searchTerm) ||
-        post.content.toLowerCase().includes(searchTerm) ||
+        (post.category && post.category.toLowerCase().includes(searchTerm)) ||
         (post.tags && post.tags.some(tag => tag.toLowerCase().includes(searchTerm)))
     );
     

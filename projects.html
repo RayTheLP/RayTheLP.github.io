@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - raythelp's Blog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="headerContainer"></div>
+
+    <main class="main-content">
+
+        <!-- Hero -->
+        <section class="pj-hero">
+            <div class="pj-hero-glow"></div>
+            <span class="pj-eyebrow"><i class="fas fa-folder-open"></i> Portfolio</span>
+            <h1 class="pj-title">My Projects</h1>
+            <p class="pj-subtitle">這裡收藏了我平日製作的各種小專案，點擊卡片即可進入體驗。</p>
+        </section>
+
+        <!-- Filter Bar -->
+        <div class="pj-filter-bar reveal">
+            <button class="pj-filter-btn active" data-filter="all">全部</button>
+            <button class="pj-filter-btn" data-filter="web">網頁</button>
+            <button class="pj-filter-btn" data-filter="tool">工具</button>
+            <button class="pj-filter-btn" data-filter="app">應用</button>
+            <button class="pj-filter-btn" data-filter="other">其他</button>
+        </div>
+
+        <!-- Stats row -->
+        <div class="pj-stats reveal" id="pjStats"></div>
+
+        <!-- Project Grid -->
+        <div class="pj-grid" id="pjGrid">
+            <div class="pj-loading">
+                <i class="fas fa-circle-notch fa-spin"></i>
+                <span>載入專案中…</span>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div class="pj-empty" id="pjEmpty" style="display:none">
+            <i class="fas fa-folder-open"></i>
+            <p>此分類尚無專案</p>
+        </div>
+
+    </main>
+
+    <div id="footerContainer"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/projects.js"></script>
+</body>
+</html>

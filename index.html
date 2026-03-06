@@ -4,43 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>raythelp's Blog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- 頁首容器 -->
     <div id="headerContainer"></div>
 
-    <!-- 主要內容 -->
     <main class="main-content">
-        <!-- 側邊欄容器 -->
-        <div id="sidebarContainer"></div>
-
-        <!-- 右側內容區域 -->
-        <section class="content">
-            <div class="posts-container" id="postsContainer">
-                <!-- 文章將由 JavaScript 動態生成 -->
-            </div>
-            
-            <!-- 分頁控制項 -->
-            <div class="pagination" id="pagination">
-                <!-- 分頁按鈕將由 JavaScript 動態生成 -->
+        <section class="hero">
+            <div class="hero-eyebrow"><i class="fas fa-sparkles"></i> 個人技術部落格</div>
+            <h1 class="hero-title">raythelp's Blog</h1>
+            <p class="hero-subtitle">一個平凡大學生的技術筆記與生活紀錄，分享美食、程式、心得</p>
+            <div class="hero-cta">
+                <a href="#postsContainer" class="hero-cta-btn primary"><i class="fas fa-book-open"></i> 開始閱讀</a>
+                <a href="about.html" class="hero-cta-btn secondary"><i class="fas fa-user"></i> 關於我</a>
             </div>
         </section>
+
+        <section class="stats-dashboard reveal" id="statsDashboard"></section>
+
+        <div class="content-grid">
+            <section class="content">
+                <div class="section-heading reveal">
+                    <span class="section-heading-badge"><i class="fas fa-clock"></i> Latest Posts</span>
+                    <span class="section-heading-line"></span>
+                </div>
+                <div class="posts-container" id="postsContainer"></div>
+                <div class="pagination" id="pagination"></div>
+            </section>
+            <div id="sidebarContainer"></div>
+        </div>
     </main>
 
-    <!-- 頁尾容器 -->
     <div id="footerContainer"></div>
 
-    <!-- 載入設定檔 -->
     <script src="js/config.js"></script>
-    <!-- 載入共用元件 -->
     <script src="js/common.js"></script>
-    <!-- 載入主要功能 -->
+    <script src="js/charts.js"></script>
     <script src="js/main.js"></script>
-    <!-- 載入互動式功能 -->
     <script src="js/interactive.js"></script>
-    <!-- 載入統計功能 -->
     <script src="js/analytics.js"></script>
 </body>
 </html>

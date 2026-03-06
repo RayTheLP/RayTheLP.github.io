@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>推薦路線 - 浪在東石</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/routes.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li><a href="about.html">東石特色</a></li>
+                <li><a href="events.html">在地美食</a></li>
+                <li><a href="routes.html" class="active">推薦路線</a></li>
+            </ul>
+            <a href="welcome.html" class="logo" title="回到首頁">
+                <img src="images/mascot/logo.webp" alt="牡蠣寶寶">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="wheel.html">浪一浪</a></li>
+                <li><a href="map.html">互動地圖</a></li>
+                <li><a href="contact.html">聯絡我們</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 心理測驗模態框 -->
+    <div id="quizModal" class="quiz-modal">
+        <div class="quiz-container">
+            <button id="skipQuiz" class="skip-btn">跳過測驗</button>
+            <div id="quizContent" class="quiz-content">
+                <h2>心理測驗 - 找出最適合你的旅行路線</h2>
+                <div id="progressBar" class="progress-bar">
+                    <div id="progress" class="progress"></div>
+                </div>
+                <div id="questionContainer" class="question-container">
+                    <!-- 問題會由 JavaScript 動態生成 -->
+                </div>
+                <div class="quiz-nav">
+                    <button id="prevBtn" class="quiz-btn" style="display: none;">上一題</button>
+                    <button id="nextBtn" class="quiz-btn">下一題</button>
+                </div>
+            </div>
+            <div id="resultContent" class="result-content" style="display: none;">
+                <h2>測驗結果</h2>
+                <div id="resultDetails"></div>
+                <button id="viewRoutes" class="quiz-btn">查看推薦路線</button>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <section class="routes-grid">
+            <div class="container routes-actions-container">
+                <button id="backToDefaultRoutes" class="btn-secondary" type="button" style="display: none;">回到預設路線</button>
+                <button id="redoQuiz" class="btn-secondary" type="button" style="display: none;">重做心理測驗</button>
+            </div>
+            <div class="container" id="routesContainer">
+                <!-- 預設路線 -->
+                <div class="route-card" data-type="budget">
+                    <img src="images/routes/north.webp" alt="一日漁港輕旅行">
+                    <div class="route-info">
+                        <h3>一日漁港輕旅行（小浪）</h3>
+                        <div class="route-schedule">
+                            <p><strong>個性標籤：</strong>《隨性、日常、在地感》</p>
+                            <p><strong>你是怎麼樣的旅人？</strong></p>
+                            <p>旅行時，通常不會排滿行程，覺得「舒服就好」，比起一定要踩滿點，你更在意當下的感受。走到哪算到哪、餓了就吃、睏了就睡。這樣的你十分適合來趟一日漁港輕旅行———漫步經典的漁人碼頭、餓了找家烤蚵品嚐在地最有名的新鮮蚵仔，海邊走走、看看夕陽。不用努力玩，也能玩的恰到好處；對你而言，旅行就該如此簡單。</p>
+                            <p><strong>行程：</strong></p>
+                            <ul>
+                                <li>東石漁港散步</li>
+                                <li>在地海產、烤蚵</li>
+                                <li>漁港看夕陽</li>
+                            </ul>
+                            <p><strong>景點：</strong>東石大橋、東石漁人碼頭、東石水中古厝、塭ㄚ烤蚵、東石漁人碼頭賞夕陽處</p>
+                        </div>
+                        <a href="https://maps.app.goo.gl/ZMmhtt84CZXG6K6b9" target="_blank" class="btn-primary">導航點我</a>
+                    </div>
+                </div>
+
+                <div class="route-card" data-type="family">
+                    <img src="images/routes/east.webp" alt="親子海岸探索行">
+                    <div class="route-info">
+                        <h3>親子海岸探索行（招潮蟹）</h3>
+                        <div class="route-schedule">
+                            <p><strong>個性標籤：</strong>《好奇、探索、互動》</p>
+                            <p><strong>你是怎麼樣的旅人？</strong></p>
+                            <p>你容易被路邊的小細節吸引，只要看到有趣的東西，就會忍不住停下來觀察；充滿好奇心的你最適合親子海岸探索行———走訪鰲鼓濕地、紅樹林，觀察棲息在那兒的小生物，去自然生態館休息一會；喜愛與人互動的你也能揪親友一同去海盜村，玩完了、餓了就來頓下午茶；會讓你覺得東石不是只有蚵仔，今天真的有看到不一樣的東石。</p>
+                            <p><strong>行程：</strong></p>
+                            <ul>
+                                <li>潮間帶、海岸觀察、散步</li>
+                                <li>午腳解說、導覽點</li>
+                                <li>親子友善步道</li>
+                            </ul>
+                            <p><strong>景點：</strong>朵拉拉的夢想花園、紅樹林生態公園、鰲鼓濕地生態展示館、向禾休閒漁場、鰲鼓濕地森林園區</p>
+                        </div>
+                        <a href="https://maps.app.goo.gl/d5DuGfma3SRsETMB7" target="_blank" class="btn-primary">導航點我</a>
+                    </div>
+                </div>
+
+                <div class="route-card" data-type="leisure">
+                    <img src="images/routes/south.webp" alt="漫遊黃昏路線">
+                    <div class="route-info">
+                        <h3>漫遊黃昏路線（黑面琵鷺）</h3>
+                        <div class="route-schedule">
+                            <p><strong>個性標籤：</strong>《感性、放空、氛圍》</p>
+                            <p><strong>你是怎麼樣的旅人？</strong></p>
+                            <p>你其實很在意旅行所帶來的心情，你喜歡柔和的光線、海風、安靜的時刻，尤其是來到一天的尾聲時的那種氛圍。你也認為旅行不是為了填滿回憶，而是讓情緒能慢慢沉澱。這樣感性的你來趟漫遊黃昏路線最適合不過了———先是睡到自然醒，悠悠的找家路邊小吃填飽肚子，下午去海岸走走、吹吹海風；傍晚坐在海邊看著夕陽緩緩落下，仔細感受當下。不用玩得多，這趟旅程能讓你充到電便足夠。</p>
+                            <p><strong>行程：</strong></p>
+                            <ul>
+                                <li>睡到自然醒</li>
+                                <li>中午吃個烤蚵</li>
+                                <li>下午抵達濕地或海岸</li>
+                                <li>漫步、拍照、吹海風</li>
+                                <li>觀賞夕陽</li>
+                            </ul>
+                            <p><strong>景點：</strong>塭ㄚ烤蚵、東石笨港口港口宮、先天宮廟口夜市、白水湖（黃昏）海邊</p>
+                        </div>
+                        <a href="https://maps.app.goo.gl/9knSFtMZZnyALvC3A" target="_blank" class="btn-primary">導航點我</a>
+                    </div>
+                </div>
+
+                <div class="route-card" data-type="culture">
+                    <img src="images/routes/west.webp" alt="文藝古蹟路線">
+                    <div class="route-info">
+                        <h3>文藝古蹟路線（海龜）</h3>
+                        <div class="route-schedule">
+                            <p><strong>個性標籤：</strong>《深度、故事、理解》</p>
+                            <p><strong>你是怎麼樣的旅人？</strong></p>
+                            <p>你喜歡有脈絡、有歷史、有故事的旅行，你會對「這個地方如何變成現在這樣」感到好奇。對你而言，比起用手機記錄當下，你更偏愛用「心」看懂這裡、用腦袋記下這裡。如此有深度的你，何不來趟文藝古蹟路線———走訪遍佈東石的廟宇，邊走，邊享受安靜、有內容的空間；了解當地文化，是你來過此處的最佳證明。走的時候不妨帶點伴手禮再離開！這條路線能讓你深入「真的理解東石」。</p>
+                            <p><strong>行程：</strong></p>
+                            <ul>
+                                <li>老建築、廟宇景點</li>
+                                <li>地方故事介紹</li>
+                                <li>主打室內、靜態</li>
+                                <li>慢慢離開</li>
+                            </ul>
+                            <p><strong>景點：</strong>余順豐花生工廠、東石笨港港口宮、水中古厝、先天宮廟口夜市</p>
+                        </div>
+                        <a href="https://maps.app.goo.gl/G4R5a8wHRoJ5B6ZB7" target="_blank" class="btn-primary">導航點我</a>
+                    </div>
+                </div>
+
+                <div class="route-card" data-type="all">
+                    <img src="images/routes/mix.webp" alt="小孩子才做選擇，我要全部">
+                    <div class="route-info">
+                        <h3>小孩子才做選擇，我要全部（奇美拉）</h3>
+                        <div class="route-schedule">
+                            <p><strong>個性標籤：</strong>《彈性、混合、多變》</p>
+                            <p><strong>你是怎麼樣的旅人？</strong></p>
+                            <p>你其實沒有固定的旅行模式，不是不知道自己要什麼，而是你願意接受不同的感受同時存在。當你只有一天能探索這裡，你適合的不是特定某一條路線，而是「能隨你心情變化的東石」。如此特別的你，不妨先去漁港走走、吃個烤蚵、當然也能去濕地看看，最後再看個夕陽作為完美的句點；東石該玩的玩了，該吃的吃了，最經典的集合體就在這了。</p>
+                            <p><strong>行程：</strong></p>
+                            <ul>
+                                <li>東石漁港散步</li>
+                                <li>中午吃烤蚵</li>
+                                <li>鰲鼓濕地</li>
+                                <li>重點廟宇</li>
+                                <li>漫遊觀賞夕陽</li>
+                            </ul>
+                            <p><strong>景點：</strong>東石漁港、東石蚵王烤鮮蚵吃到飽、東石笨港口港口宮、先天宮廟口夜市(吃小吃)、白水湖</p>
+                        </div>
+                        <a href="https://maps.app.goo.gl/6U47QxyGWHPQbkAn7" target="_blank" class="btn-primary">導航點我</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 浪在東石網站. All rights reserved.</p>
+    </footer>
+
+    <script src="js/theme.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/animation.js"></script>
+    <script src="js/quiz.js"></script>
+</body>
+</html>

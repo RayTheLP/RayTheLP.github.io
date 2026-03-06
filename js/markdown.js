@@ -35,6 +35,7 @@ class MarkdownConverter {
             { pattern: /^---$/gim, replacement: '<hr>' },
             
             // 換行轉換規則
+            { pattern: /  \n/g, replacement: '<br>' }, // 行尾雙空格轉換行
             { pattern: /\n\n/g, replacement: '</p><p>' }, // 雙換行轉段落
         ];
     }
@@ -43,13 +44,20 @@ class MarkdownConverter {
     convert(markdown) {
         if (!markdown) return '';
         
-        // 用段落標籤包裝內容
-        let html = '<p>' + markdown + '</p>';
+        // 統一換行符號為 \n
+        markdown = markdown.replace(/\r\n/g, '\n');
+        
+        // 先套用所有轉換規則，不預先包裝 <p>，
+        // 避免 <p># 或 <p>--- 破壞行首正則匹配
+        let html = markdown;
         
         // 應用所有轉換規則
         this.rules.forEach(rule => {
             html = html.replace(rule.pattern, rule.replacement);
         });
+        
+        // 規則套用完畢後再包裝段落標籤
+        html = '<p>' + html + '</p>';
         
         // 清理空段落
         html = html.replace(/<p><\/p>/g, '');
@@ -120,13 +128,53 @@ class MarkdownConverter {
 // Create global instance
 window.markdownConverter = new MarkdownConverter();
 
-// Utility function to convert markdown to HTML
-function markdownToHtml(markdown) {
-    return window.markdownConverter.convert(markdown);
+// ═══════════════════════════════════════════════════
+// YAML Frontmatter 解析器
+// ═══════════════════════════════════════════════════
+function parseFrontmatter(raw) {
+    const result = { metadata: {}, content: raw };
+    if (!raw.startsWith('---')) return result;
+
+    const endIdx = raw.indexOf('---', 3);
+    if (endIdx === -1) return result;
+
+    const yamlBlock = raw.substring(3, endIdx).trim();
+    const content = raw.substring(endIdx + 3).trim();
+
+    const metadata = {};
+    yamlBlock.split('\n').forEach(line => {
+        const colonIdx = line.indexOf(':');
+        if (colonIdx === -1) return;
+        const key = line.substring(0, colonIdx).trim();
+        let val = line.substring(colonIdx + 1).trim();
+
+        // 移除引號
+        if ((val.startsWith('"') && val.endsWith('"')) ||
+            (val.startsWith("'") && val.endsWith("'"))) {
+            val = val.slice(1, -1);
+        }
+
+        // 解析陣列 [a, b, c]
+        if (val.startsWith('[') && val.endsWith(']')) {
+            val = val.slice(1, -1).split(',').map(s => s.trim());
+        }
+
+        metadata[key] = val;
+    });
+
+    return { metadata, content };
 }
 
-// Export for use in other files
+// 從 .md 檔案載入文章（fetch + 解析 frontmatter）
+async function fetchPost(filePath) {
+    const response = await fetch(filePath);
+    if (!response.ok) throw new Error('Failed to load ' + filePath);
+    const raw = await response.text();
+    return parseFrontmatter(raw);
+}
+
 window.markdownUtils = {
-    markdownToHtml,
+    parseFrontmatter,
+    fetchPost,
     MarkdownConverter
 }; 
