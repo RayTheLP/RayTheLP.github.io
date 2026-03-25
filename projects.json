@@ -13,6 +13,18 @@
       "github": ""
     },
     {
+      "id": "企劃書",
+      "title": "網頁程式設計期末專題企畫書",
+      "description": "資管系不只要會寫程式還要很會寫企劃書喔",
+      "date": "2026-03-25",
+      "tags": ["Word"],
+      "type": "other",
+      "status": "completed",
+      "featured": false,
+      "demo": "projects/Dongshi_paper.pdf",
+      "github": ""
+    },
+    {
       "id": "1A2B",
       "title": "基礎程式設計期末專題",
       "description": "還記得那時候研究了很久的1A2B邏輯，最後終於寫出來了，以為自己要拿第一名，結果被其他人打趴。",

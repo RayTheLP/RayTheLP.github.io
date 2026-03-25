@@ -38,6 +38,7 @@
         const s = statusLabel(project.status);
         const hasDemo   = project.demo   && project.demo.trim()   !== '';
         const hasGithub = project.github && project.github.trim() !== '';
+        const isPdfDemo = hasDemo && /\.pdf($|[?#])/i.test(project.demo);
 
         const tagHtml = (project.tags || [])
             .map(t => `<span class="pj-tag">${t}</span>`)
@@ -49,7 +50,7 @@
 
         const demoBtnHtml = hasDemo
             ? `<a href="${project.demo}" class="pj-card-btn pj-btn-primary" target="_blank" rel="noopener">
-                   <i class="fas fa-play"></i> 開啟專案
+                   <i class="${isPdfDemo ? 'fas fa-file-pdf' : 'fas fa-play'}"></i> ${isPdfDemo ? '預覽 PDF' : '開啟專案'}
                </a>`
             : '';
 
